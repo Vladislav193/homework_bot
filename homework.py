@@ -89,7 +89,7 @@ def parse_status(homework):
 def check_tokens():
     """Проверка токенов."""
     if (TELEGRAM_CHAT_ID is None or TELEGRAM_TOKEN is None
-    or PRACTICUM_TOKEN is None):
+            or PRACTICUM_TOKEN is None):
         return False
     return True
 
