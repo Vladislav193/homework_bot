@@ -75,7 +75,7 @@ def check_response(response):
 
 def parse_status(homework):
     """
-    извлекает из информации о конкретной
+    извлекает из информации о конкретной.
     домашней работе статус этой работы.
     """
     homework_name = homework.get('homework_name')
@@ -89,8 +89,8 @@ def parse_status(homework):
 def check_tokens():
     """Проверка токенов."""
     if (TELEGRAM_CHAT_ID is None or TELEGRAM_TOKEN is None
-        or PRACTICUM_TOKEN is None):
-            return False
+    or PRACTICUM_TOKEN is None):
+        return False
     return True
 
 
@@ -98,7 +98,7 @@ def main():
     """Основная логика работы бота."""
     bot = telegram.Bot(token=TELEGRAM_TOKEN)
     current_timestamp = int(time.time())
-    status=''
+    status = ''
     if not check_tokens:
         logger.CRITICAL('отсуствую переменые окружения')
     while True:
