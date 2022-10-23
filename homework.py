@@ -1,5 +1,4 @@
 from dotenv import load_dotenv
-import logging
 import requests
 import os
 import time
@@ -75,7 +74,8 @@ def check_response(response):
 
 
 def parse_status(homework):
-    """извлекает из информации о конкретной
+    """
+    извлекает из информации о конкретной
     домашней работе статус этой работы.
     """
     homework_name = homework.get('homework_name')
@@ -90,7 +90,7 @@ def check_tokens():
     """Проверка токенов."""
     if (TELEGRAM_CHAT_ID is None or TELEGRAM_TOKEN is None
         or PRACTICUM_TOKEN is None):
-        return False
+            return False
     return True
 
 
@@ -98,6 +98,7 @@ def main():
     """Основная логика работы бота."""
     bot = telegram.Bot(token=TELEGRAM_TOKEN)
     current_timestamp = int(time.time())
+    status=''
     if not check_tokens:
         logger.CRITICAL('отсуствую переменые окружения')
     while True:
@@ -113,6 +114,7 @@ def main():
         except Exception as error:
             message = f'Сбой в работе программы: {error}'
             time.sleep(RETRY_TIME)
+
 
 if __name__ == '__main__':
     main()
