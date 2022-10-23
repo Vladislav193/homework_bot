@@ -26,7 +26,7 @@ handler.setFormatter(formatter)
 
 
 PRACTICUM_TOKEN = os.getenv('PRACTICUM_TOKEN')
-TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN' )
+TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
 TELEGRAM_CHAT_ID = os.getenv('TELEGRAM_CHAT_ID')
 
 
@@ -43,11 +43,11 @@ HOMEWORK_STATUSES = {
 
 
 def send_message(bot, message):
-    """ отправляет сообщение в Telegram чат"""
-    return bot.send_message(chad_id=TELEGRAM_CHAT_ID,text = message)
+    """отправляет сообщение в Telegram чат."""
+    return bot.send_message(chad_id=TELEGRAM_CHAT_ID, text=message)
 
 def get_api_answer(current_timestamp):
-    """ делает запрос к единственному эндпоинту API-сервиса"""
+    """делает запрос к единственному эндпоинту API-сервиса."""
     timestamp = current_timestamp or int(time.time())
     params = {'from_date': timestamp}
     try:
@@ -59,7 +59,7 @@ def get_api_answer(current_timestamp):
     return response.json()
 
 def check_response(response):
-    """ проверяет ответ API на корректность"""
+    """проверяет ответ API на корректность."""
     if type(response) is not dict:
         raise TypeError('не корректный тип')
     if response['homeworks'] is None:
@@ -81,7 +81,7 @@ def parse_status(homework):
     return f'Изменился статус проверки работы "{homework_name}". {verdict}'
 
 def check_tokens():
-    """Проверка токенов"""
+    """Проверка токенов."""
     if (TELEGRAM_CHAT_ID is None or TELEGRAM_TOKEN is None
     or PRACTICUM_TOKEN is None):
         return False
