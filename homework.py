@@ -17,7 +17,8 @@ logging.basicConfig(
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
-handler = RotatingFileHandler('my_logger.log', maxBytes=50000000, backupCount=5)
+handler = RotatingFileHandler('my_logger.log', maxBytes=50000000,
+                              backupCount=5)
 logger.addHandler(handler)
 formatter = logging.Formatter(
     '%(asctime)s - %(levelname)s - %(message)s'
@@ -46,6 +47,7 @@ def send_message(bot, message):
     """отправляет сообщение в Telegram чат."""
     return bot.send_message(chad_id=TELEGRAM_CHAT_ID, text=message)
 
+
 def get_api_answer(current_timestamp):
     """делает запрос к единственному эндпоинту API-сервиса."""
     timestamp = current_timestamp or int(time.time())
@@ -57,6 +59,7 @@ def get_api_answer(current_timestamp):
     if response.status_code != 200:
         raise Exception('Ошибка статуса')
     return response.json()
+
 
 def check_response(response):
     """проверяет ответ API на корректность."""
@@ -70,9 +73,11 @@ def check_response(response):
         )
     return response['homeworks']
 
+
 def parse_status(homework):
     """извлекает из информации о конкретной
-    домашней работе статус этой работы."""
+    домашней работе статус этой работы.
+    """
     homework_name = homework.get('homework_name')
     homework_status = homework.get('status')
     if homework_status not in HOMEWORK_STATUSES:
@@ -80,12 +85,14 @@ def parse_status(homework):
     verdict = HOMEWORK_STATUSES[homework_status]
     return f'Изменился статус проверки работы "{homework_name}". {verdict}'
 
+
 def check_tokens():
     """Проверка токенов."""
     if (TELEGRAM_CHAT_ID is None or TELEGRAM_TOKEN is None
-    or PRACTICUM_TOKEN is None):
+        or PRACTICUM_TOKEN is None):
         return False
     return True
+
 
 def main():
     """Основная логика работы бота."""
