@@ -52,15 +52,16 @@ def send_message(bot, message):
     except Exception:
         raise SendMessageError
 
+
 def get_api_answer(current_timestamp):
     """делает запрос к единственному эндпоинту API-сервиса."""
     timestamp = current_timestamp or int(time.time())
     params = {'from_date': timestamp}
     params_requests = {
-            'url': ENDPOINT,
-            'params': params,
-            'headers': HEADERS
-        }
+        'url': ENDPOINT,
+        'params': params,
+        'headers': HEADERS
+    }
     try:
         response = requests.get(**params_requests)
     except Exception as error:
@@ -75,7 +76,7 @@ def check_response(response):
     """проверяет ответ API на корректность."""
     if not isinstance(response, dict):
         raise TypeError('Ответ API не является словарем')
-    if 'homeworks'not in response :
+    if 'homeworks' not in response:
         raise KeyError('Отсуствует ключ homeworks в API')
     if not isinstance(response['homeworks'], list):
         raise Exception(
@@ -129,7 +130,7 @@ def main():
                 send_message(bot, message)
                 status = message
         except SendMessageError:
-            logger.error (f'Сообщение не отправленно')
+            logger.error('Сообщение не отправленно')
         except Exception as error:
             message = f'Сбой в работе программы: {error}'
         finally:
