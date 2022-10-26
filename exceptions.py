@@ -7,3 +7,7 @@ class SendMessageError(Exception):
 class RequestsError(Exception):
     """Ошибка при запросе к эндпоинту API."""
     pass
+
+class StatusCodeError(Exception):
+    """Ошибка статуса"""
+    pass
