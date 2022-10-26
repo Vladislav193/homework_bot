@@ -7,7 +7,7 @@ import time
 import logging
 from logging.handlers import RotatingFileHandler
 import telegram.ext
-from exceptions import SendMessageError, RequestsError,StatusCodeError
+from exceptions import SendMessageError, RequestsError, StatusCodeError
 
 
 load_dotenv()
@@ -20,7 +20,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 handler = RotatingFileHandler('my_logger.log', maxBytes=50000000,
-                              backupCount=5, encoding = "UTF-8")
+                              backupCount=5, encoding="UTF-8")
 logger.addHandler(handler)
 formatter = logging.Formatter(
     '%(asctime)s - %(levelname)s - %(message)s'
@@ -123,7 +123,6 @@ def parse_status(homework):
         raise KeyError(
             'Отсуствует ключ homework_name в homework'
         )
-    
     if 'status' not in homework:
         raise KeyError('Отсуствует ключ status')
     homework_name = homework.get('homework_name')
@@ -154,6 +153,7 @@ def main():
         logger.CRITICAL(
             'отсуствую переменые окружения PRACTICUM_TOKEN,'
             'TELEGRAM_TOKEN, TELEGRAM_CHAT_ID')
+        message = 'Выход из программы'
         sys.exit(message)
     bot = telegram.Bot(token=TELEGRAM_TOKEN)
     current_timestamp = int(time.time())
