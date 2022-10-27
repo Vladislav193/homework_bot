@@ -109,7 +109,6 @@ def check_response(response):
             f'В {response} отсуствует ключ homeworks'
             'ожидали, что в response будет ключ homeworks'
             f'содержимое можно посмотреть в {response}'
-            
         )
     if not isinstance(response['homeworks'], list):
         raise TypeError(
