@@ -76,7 +76,9 @@ def get_api_answer(current_timestamp):
         response = requests.get(**params_requests)
     except Exception as error:
         raise RequestsError(
-            f'Ошибка при запросе к эндпоинту API:{error}'
+            'Ошибка при запросе requests.get(**params_reuests)'
+            'c параметрами: url:ENDPOINT, params:params,'
+            f'headers: HEADERSк эндпоинту API :{error}'
         )
     else:
         logger.info(
@@ -84,7 +86,11 @@ def get_api_answer(current_timestamp):
         )
     if response.status_code != HTTPStatus.OK:
         raise StatusCodeError(
-            'Ошибка статуса response, ожидали статус будет равен 200'
+            'Ошибка статуса response c'
+            'одним из параметром: url:ENDPOINT,'
+            f'не рабочий {ENDPOINT}'
+            'ожидали статус будет равен 200'
+            f'Ответ от API:{response.status_code}'
         )
     return response.json()
 
@@ -94,18 +100,22 @@ def check_response(response):
     logger.info('Проверка response.json на корректность')
     if not isinstance(response, dict):
         raise TypeError(
-            'в response пришел неверный тип данных'
+            f'в {response} пришел неверный тип данных'
             'ожидали что в response будет словарь'
+            f'тип данных в {response}'
         )
     if 'homeworks' not in response:
         raise KeyError(
-            'В response отсуствует ключ homeworks'
+            f'В {response} отсуствует ключ homeworks'
             'ожидали, что в response будет ключ homeworks'
+            f'содержимое можно посмотреть в {response}'
+            
         )
     if not isinstance(response['homeworks'], list):
         raise TypeError(
             'response[homeworks] не является списком'
             'ожидалось, что response[homeworks] = list'
+            'каким типом вернулся: response[homeworks]'
         )
     logger.info('Проверка на корректность пройдена')
     return response['homeworks']
@@ -121,14 +131,22 @@ def parse_status(homework):
     )
     if 'homework_name' not in homework:
         raise KeyError(
-            'Отсуствует ключ homework_name в homework'
+            'Отсуствует ключ homework_name в словаре homework'
+            'ожидалось, что в словаре homework есть ключ homework_name'
         )
     if 'status' not in homework:
-        raise KeyError('Отсуствует ключ status')
+        raise KeyError(
+            'Отсуствует ключ status в словаре homework'
+            'ожидалось, что в словаре status есть ключ homework_name'
+        )
     homework_name = homework.get('homework_name')
     homework_status = homework.get('status')
     if homework_status not in HOMEWORK_STATUSES:
-        raise KeyError('Ошибка сервера, неверный статус')
+        raise KeyError(
+            'не содерждит ключ status в словаре homework '
+            'один из ключей HOMEWORK_STATUSES(approved,reviewing,rejected)'
+            'ожидалось, что будет один из ключей HOMEWORK_STATUSES'
+        )
     verdict = HOMEWORK_STATUSES[homework_status]
     logger.info(
         'Проверили на присуствие homework_name,'
